@@ -16,36 +16,68 @@ We recommend to work with the repository in combination with [kitcar-ws](https:/
 
 Here are the instructions on how to achieve this setup.
 
-1.  Run `git clone https://github.com/KITcar-Team/kitcar-ws.git` (it
-    will clone the repository into the folder where you run it in. A
-    common place would be for example in a folder like `~/kitcar/`. If
+0.  Choose a directory where you want to place all of the files.
+    A common place would be for example in a folder like `~/kitcar/`. If
     you don’t know what that means, read about it
     [here](<https://linuxvox.com/blog/home-in-linux/>) or ask your
     favorite LLM).
 
-2.  After that, you need to navigate into the `src` folder of the
-    workspace-repo. To do that, just run `cd kitcar-ws/src`.
+1.  At KITcar, we use the [`kitcar-ws`](https://github.com/KITcar-Team/kitcar-ws) repository for development.
+    This repository contains a template for ROS development and vscode-configuration.
+    More importantly, it also provides a
+    [devcontainer](https://code.visualstudio.com/docs/devcontainers/create-dev-container).
+    This devcontainer provides an environment where ROS 2 and all other dependencies are installed,
+    facilitating development.
+    To set up this devcontainer, follow the
+    [readme in kitcar-ws](https://github.com/KITcar-Team/kitcar-ws/blob/main/README.md).
+    You can skip the `colcon build` step because we don't need to build any of the standard projects.
 
-3.  Now, you need to clone the repository you had forked earlier. Run
-    `git clone https://github.com/<your username>/KITcar-Turtlerace`.
+2.  After following the instructions,
+    you should have vscode open and connected to the devcontainer.
+    In order to verify this, open a terminal in vscode and run the command `whoami`.
+    This should output `kitcar`.
+    If it outputs anything else,
+    make sure that you opened the folder of the `kitcar-ws` repository
+    (and neither a sub-, nor a superfolder).
+    Then, you should be able to open
+    the command palette (CTRL+SHIFT+P) and search for
+    *Dev Containers: Open Workspace in Container*.
 
-4.  If that worked, you have all you need on disk. Now open vscode and
-    go to `File>Open Folder`.
+3.  Now, we need to run more commands in a terminal inside vscode.
+    First, run `cd ~/ws/src` to enter the `src`-directory,
+    where all of the repositories reside.
+    Here, we want to add the turtlerace-repo as well.
+    You do this by running
+    ```
+    git clone https://github.com/<your username>/KITcar-Turtlerace
+    ```
+    Replace `<your username>` with your actual GitHub username.
+    This will actually clone the fork that you created of the repository.
 
-5.  In the file explorer, select the `kitcar-ws` folder from before.
-    **Do not select the turtlerace folder! You need to navigate to the
-    `kitcar-ws` folder and click on *Open Folder*!**
+4.  From now on, you want to run all commands inside the turtlerace folder.
+    To place your terminal into that folder, run
+    ```
+    cd ~/ws/src/KITcar-Turtlerace
+    ```
+    (if you are confused about the folder your terminal is in at any point,
+    you can always return to that folder by running the above command).
+    Running commands like `colcon build` in a different folder accidentally
+    won't break anything.
+    It will just build unnecessary packages, so there is no need to be afraid.
 
-6.  Now, vscode should suggest you to re-open the workspace in the
-    devcontainer. Either click on the blue button of the dialog or open
-    the command palette (CTRL+SHIFT+P) and search for *Open in
-    Dev Containers: Reopen in Container*. Now wait until vscode is
-    ready again and pray that everything works.
+5.  Now you can run `colcon build` to build the turtlerace packages.
 
-Here is a summary of the commands that you need to run
-(remember to first fork the repository, and then replace `<your username>` with your actual username below):
-```bash
-git clone https://github.com/KITcar-Team/kitcar-ws.git
-cd kitcar-ws/src
-git clone https://github.com/<your username>/KITcar-Turtlerace
-```
+6.  If it builds correctly,
+    you can source the setup script for the packages by running
+    ```
+    source ~/ws/src/KITcar-Turtlerace/install/setup.zsh
+    ```
+    You need to run this command in every new terminal so later commands know
+    about the packages that the turtlerace provides.
+
+7.  If you don't want to have to run this command in each new terminal,
+    you can run the following command *once*:
+    ```
+    echo 'source ~/ws/src/KITcar-Turtlerace/install/setup.zsh' >> ~/.zshrc
+    ```
+    Now, the script will be sourced in each new terminal automatically.
