@@ -30,7 +30,7 @@ Here are the instructions on how to achieve this setup.
     facilitating development.
     To set up this devcontainer, follow the
     [readme in kitcar-ws](https://github.com/KITcar-Team/kitcar-ws/blob/main/README.md).
-    You can skip the `colcon build` step because we don't need to build any of the standard projects.
+    You can skip the `colcon build --symlink-install` step because we don't need to build any of the standard projects.
 
 2.  After following the instructions,
     you should have vscode open and connected to the devcontainer.
@@ -61,11 +61,11 @@ Here are the instructions on how to achieve this setup.
     ```
     (if you are confused about the folder your terminal is in at any point,
     you can always return to that folder by running the above command).
-    Running commands like `colcon build` in a different folder accidentally
+    Running commands like `colcon build --symlink-install` in a different folder accidentally
     won't break anything.
     It will just build unnecessary packages, so there is no need to be afraid.
 
-5.  Now you can run `colcon build` to build the turtlerace packages.
+5.  Now you can run `colcon build --symlink-install` to build the turtlerace packages.
 
 6.  If it builds correctly,
     you can source the setup script for the packages by running
